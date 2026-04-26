@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<!-- ***************************************************************
-*    Diese Datei gehört zum  WebEng-Kurs an der HNU
-*    Copyright (c) by UNKNOWN
-*    Frei benutzbar von WebEng-Studierenden
-******************************************************************** -->
-<html>
+<html lang="de">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Apotheke - Produktsortiment</title>
+    <style>
+        .admin, #knopfAnlegen, #knopfEntloggen {
+            display: none;
+        }
+        .rund { border-radius: 5px; }
+        .maske { display: none; }
+    </style>
 </head>
 
-
 <body>
-<header><button onclick="wechsleMaske('loginMaske');"> loggen </button></header>
+<header>
+    <button id="knopfLoggen" onclick="wechsleMaske('loginMaske');"> loggen </button>
+    <button id="knopfEntloggen" onclick="ausloggen();"> entloggen </button>
+</header>
+
 <div id="loginMaske" class="maske">
     <h2>Logge Dich ein!</h2>
-    <table id="tabelle">
+    <table id="tabelleLogin">
         <tr>
             <td><label>Name</label></td>
             <td><input class="rund" type="text" value="Gib Deinen Namen ein"/></td>
@@ -25,17 +30,16 @@
             <td><input class="rund" type="password" value="Gib Dein Passwort ein"/></td>
         </tr>
         <tr>
-            <td><button onclick="wechsleMaske('datenMaske')">Einloggen</button></td>
+            <td><button type="button" onclick="einloggen()">Einloggen</button></td>
         </tr>
     </table>
 </div>
 
-
 <div id="eingabeMaske" class="maske">
     <h1>Produktsortiment</h1>
     <h2>Gebe Produktdaten ein!</h2>
-    <form action="javascript:wechsleMaske('datenMaske');">
-        <table id="tabelle">
+    <form onsubmit="return false;">
+        <table id="tabelleEingabe">
             <tr>
                 <td><label>Produkt</label></td>
                 <td><input class="rund" type="text" value="Gib einen Produktnamen ein"/></td>
@@ -49,19 +53,16 @@
                 <td><input class="rund" type="text" value="Gib die ArtikelNr ein"/></td>
             </tr>
             <tr>
-                <td>
-                    <label>Preis</label>
-                </td>
+                <td><label>Preis</label></td>
                 <td><input class="rund" type="text" value="Gib den Preis ein"/></td>
             </tr>
-
             <tr>
                 <td><label>Bild</label></td>
                 <td><input class="rund" type="text" value="Füge Bildpfad ein"/></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input type="submit" value="Speichern"></td>
+                <td><button type="button" onclick="wechsleMaske('datenMaske')">Speichern</button></td>
             </tr>
         </table>
     </form>
@@ -70,7 +71,8 @@
 <div id="datenMaske" class="maske">
     <h1>Produktsortiment</h1>
     <h2>Folgende Produkte stehen zur Auswahl</h2>
-    <button onclick="wechsleMaske('eingabeMaske')"> anlegen </button>
+    <button id="knopfAnlegen" onclick="wechsleMaske('eingabeMaske')"> anlegen </button>
+    <br><br>
     <table>
         <tr>
             <th>Produkt</th>
@@ -79,6 +81,7 @@
             <th>ArtikelNr</th>
             <th>Preis</th>
             <th>Bilder</th>
+            <th class="admin">Aktionen</th>
         </tr>
         <tr>
             <td>IBU-RATIOPHARM 400mg akut Schmerztbl. Filmtabl. 50 St.</td>
@@ -86,8 +89,11 @@
             <td>Ibuprofen</td>
             <td>31415926</td>
             <td>12,78 Euro</td>
-            <td> <img src="pics/" style="width:100%"></td>
-            <td><button onclick="wechsleMaske('eingabeMaske')">Ändern</button> <button onclick="alert('Löschen erfolgreich');">Löschen</button></td>
+            <td><img src="pics/ibu.jpg" style="width:50px"></td>
+            <td class="admin">
+                <button onclick="wechsleMaske('eingabeMaske')">Ändern</button>
+                <button onclick="alert('Löschen erfolgreich');">Löschen</button>
+            </td>
         </tr>
         <tr>
             <td>NASENSPRAY Heumann 10ml</td>
@@ -95,8 +101,11 @@
             <td>Xylometazolin</td>
             <td>238462643</td>
             <td>4,19 Euro</td>
-            <td><img src="pics/" style="width:100%"></td>
-            <td><button onclick="wechsleMaske('eingabeMaske')">Ändern</button> <button onclick="alert('Löschen erfolgreich');">Löschen</button></td>
+            <td><img src="pics/nasenspray.jpg" style="width:50px"></td>
+            <td class="admin">
+                <button onclick="wechsleMaske('eingabeMaske')">Ändern</button>
+                <button onclick="alert('Löschen erfolgreich');">Löschen</button>
+            </td>
         </tr>
         <tr>
             <td>PROSPAN Hustensaft 10ml</td>
@@ -104,21 +113,46 @@
             <td>Efeublätter</td>
             <td>53589793</td>
             <td>9,47 Euro</td>
-            <td><img src="pics/" style="width:100%"></td>
-            <td><button onclick="wechsleMaske('eingabeMaske')">Ändern</button> <button onclick="alert('Löschen erfolgreich');">Löschen</button></td>
+            <td><img src="pics/hustensaft.jpg" style="width:50px"></td>
+            <td class="admin">
+                <button onclick="wechsleMaske('eingabeMaske')">Ändern</button>
+                <button onclick="alert('Löschen erfolgreich');">Löschen</button>
+            </td>
         </tr>
     </table>
 </div>
 
 <script type="text/javascript">
     function wechsleMaske(sichtbareMaske){
-        console.log("Aufruf von wechsleMaske mit " + sichtbareMaske);
-        var masken=document.getElementsByClassName("maske");
-        for(var i=0;i<masken.length;i++){
-            masken[i].style.display="none";
+        var masken = document.getElementsByClassName("maske");
+        for(var i = 0; i < masken.length; i++){
+            masken[i].style.display = "none";
         }
         document.getElementById(sichtbareMaske).style.display = "block";
     }
+
+    function einloggen() {
+        wechsleMaske('datenMaske');
+        document.getElementById("knopfLoggen").style.display = "none";
+        document.getElementById("knopfEntloggen").style.display = "inline";
+        document.getElementById("knopfAnlegen").style.display = "inline";
+        var admins = document.getElementsByClassName("admin");
+        for(var i = 0; i < admins.length; i++) {
+            admins[i].style.display = "table-cell";
+        }
+    }
+
+    function ausloggen() {
+        wechsleMaske('datenMaske');
+        document.getElementById("knopfLoggen").style.display = "inline";
+        document.getElementById("knopfEntloggen").style.display = "none";
+        document.getElementById("knopfAnlegen").style.display = "none";
+        var admins = document.getElementsByClassName("admin");
+        for(var i = 0; i < admins.length; i++) {
+            admins[i].style.display = "none";
+        }
+    }
+
     wechsleMaske("datenMaske");
 </script>
 </body>
