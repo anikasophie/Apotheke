@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!-- ***************************************************************
+*    Diese Datei gehört zum  WebEng-Kurs an der HNU
+*    Copyright (c) by UNKNOWN
+*    Frei benutzbar von WebEng-Studierenden
+******************************************************************** -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+
+<body>
+<header><button onclick="wechsleMaske('loginMaske');"> loggen </button></header>
+<div id="loginMaske" class="maske">
+    <h2>Logge Dich ein!</h2>
+    <table id="tabelle">
+        <tr>
+            <td><label>Name</label></td>
+            <td><input class="rund" type="text" value="Gib Deinen Namen ein"/></td>
+        </tr>
+        <tr>
+            <td><label>Passwort</label></td>
+            <td><input class="rund" type="password" value="Gib Dein Passwort ein"/></td>
+        </tr>
+        <tr>
+            <td><button onclick="wechsleMaske('datenMaske')">Einloggen</button></td>
+        </tr>
+    </table>
+</div>
+
+
+<div id="eingabeMaske" class="maske">
+    <h1>Produktsortiment</h1>
+    <h2>Gebe Produktdaten ein!</h2>
+    <form action="javascript:wechsleMaske('datenMaske');">
+        <table id="tabelle">
+            <tr>
+                <td><label>Produkt</label></td>
+                <td><input class="rund" type="text" value="Gib einen Produktnamen ein"/></td>
+            </tr>
+            <tr>
+                <td><label>Anbieter</label></td>
+                <td><input class="rund" type="text" value="Gib einen Anbieter ein"/></td>
+            </tr>
+            <tr>
+                <td><label>ArtikelNr</label></td>
+                <td><input class="rund" type="text" value="Gib die ArtikelNr ein"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Preis</label>
+                </td>
+                <td><input class="rund" type="text" value="Gib den Preis ein"/></td>
+            </tr>
+
+            <tr>
+                <td><label>Bild</label></td>
+                <td><input class="rund" type="text" value="Füge Bildpfad ein"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Speichern"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="datenMaske" class="maske">
+    <h1>Produktsortiment</h1>
+    <h2>Folgende Produkte stehen zur Auswahl</h2>
+    <button onclick="wechsleMaske('eingabeMaske')"> anlegen </button>
+    <table>
+        <tr>
+            <th>Produkt</th>
+            <th>Anbieter</th>
+            <th>Wirkstoff</th>
+            <th>ArtikelNr</th>
+            <th>Preis</th>
+            <th>Bilder</th>
+        </tr>
+        <tr>
+            <td>IBU-RATIOPHARM 400mg akut Schmerztbl. Filmtabl. 50 St.</td>
+            <td>ratiopharm GMmbH</td>
+            <td>Ibuprofen</td>
+            <td>31415926</td>
+            <td>12,78 Euro</td>
+            <td> <img src="pics/" style="width:100%"></td>
+            <td><button onclick="wechsleMaske('eingabeMaske')">Ändern</button> <button onclick="alert('Löschen erfolgreich');">Löschen</button></td>
+        </tr>
+        <tr>
+            <td>NASENSPRAY Heumann 10ml</td>
+            <td>HEUMANN PHARMA GmbH & Co.Generica KG</td>
+            <td>Xylometazolin</td>
+            <td>238462643</td>
+            <td>4,19 Euro</td>
+            <td><img src="pics/" style="width:100%"></td>
+            <td><button onclick="wechsleMaske('eingabeMaske')">Ändern</button> <button onclick="alert('Löschen erfolgreich');">Löschen</button></td>
+        </tr>
+        <tr>
+            <td>PROSPAN Hustensaft 10ml</td>
+            <td>Engelhard Arzneimittel GmbH & Co.KG</td>
+            <td>Efeublätter</td>
+            <td>53589793</td>
+            <td>9,47 Euro</td>
+            <td><img src="pics/" style="width:100%"></td>
+            <td><button onclick="wechsleMaske('eingabeMaske')">Ändern</button> <button onclick="alert('Löschen erfolgreich');">Löschen</button></td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    function wechsleMaske(sichtbareMaske){
+        console.log("Aufruf von wechsleMaske mit " + sichtbareMaske);
+        var masken=document.getElementsByClassName("maske");
+        for(var i=0;i<masken.length;i++){
+            masken[i].style.display="none";
+        }
+        document.getElementById(sichtbareMaske).style.display = "block";
+    }
+    wechsleMaske("datenMaske");
+</script>
+</body>
+</html>
