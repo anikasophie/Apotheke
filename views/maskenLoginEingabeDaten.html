@@ -2,77 +2,95 @@
 <!-- ***************************************************************
 *    Diese Datei gehört zum  WebEng-Kurs an der HNU
 *    Copyright (c) by Niklas Borski & Anika Starcke
-*    Frei benutzbar von WebEng-Studierenden Test
+*    Frei benutzbar von WebEng-Studierenden
 ******************************************************************** -->
 <html lang="de">
 <head>
     <meta charset="utf-8">
     <title>Apotheke - Produktsortimente</title>
     <style>
-        .admin, #knopfAnlegen, #knopfEntloggen {
+        .verwaltung, #knopfAnlegen, #knopfEntloggen {
             display: none;
         }
     </style>
 </head>
 <body>
 <header>
-    <button id="knopfLoggen" onclick="wechsleMaske('loginMaske');"> loggen </button>
-    <button id="knopfEntloggen" onclick="ausloggen();"> entloggen </button>
+    <button id="knopfLoggen" onclick="wechsleMaske('loginMaske');"> loggen</button>
+    <button id="knopfEntloggen" onclick="ausloggen();"> entloggen</button>
 </header>
 <div id="loginMaske" class="maske">
     <h2>Logge Dich ein!</h2>
-    <table id="tabelleLogin">
+    <table id="einloggenAls">
+        <h3>In welcher Rolle?</h3>
+        <label for="user">User</label>
+        <input id="user" type="checkbox" name="rollenWahl" value="user"/>
+
+        <label for="verwaltung">Verwaltung</label>
+        <input id="verwaltung"  type="checkbox" name="rollenWahl" value="verwaltung"/>
+
+        <label for="speziell">Speziell</label>
+        <input id="speziell" type="checkbox" name="rollenWahl" value="speziell"/>
+
         <tr>
             <td><label>Name</label></td>
-            <td><input type="text" value="Gib Deinen Namen ein"/></td>
+            <td><input type="text" placeholder="Gib Deinen Namen ein"/></td>
         </tr>
         <tr>
             <td><label>Passwort</label></td>
-            <td><input type="password" value="Gib Dein Passwort ein"/></td>
+            <td><input type="password" placeholder="Gib Dein Passwort ein"/></td>
         </tr>
         <tr>
-            <td><button type="button" onclick="einloggen()">Einloggen</button></td>
+            <td>
+                <button type="button" onclick="einloggen()">Einloggen</button>
+            </td>
         </tr>
     </table>
 </div>
-<div id="eingabeMaske" class="maske">
-    <h1>Produktsortiment</h1>
-    <h2>Gebe Produktdaten ein!</h2>
-    <table id="tabelleEingabe">
-        <tr>
-            <td><label>Produkt</label></td>
-            <td><input type="text" value="Gib einen Produktnamen ein"/></td>
-        </tr>
-        <tr>
-            <td><label>Anbieter</label></td>
-            <td><input type="text" value="Gib einen Anbieter ein"/></td>
-        </tr>
-        <tr>
-            <td><label>Wirkstoff</label></td>
-            <td><input type="text" value="Gib Wirkstoff an"/></td>
-        </tr>
-        <tr>
-            <td><label>ArtikelNr</label></td>
-            <td><input type="text" value="Gib die ArtikelNr ein"/></td>
-        </tr>
-        <tr>
-            <td><label>Preis</label></td>
-            <td><input type="text" value="Gib den Preis ein"/></td>
-        </tr>
-        <tr>
-            <td><label>Bild</label></td>
-            <td><input type="text" value="Füge Bildpfad ein"/></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><button type="button" onclick="wechsleMaske('datenMaske')">Speichern</button></td>
-        </tr>
-    </table>
-</div>
+
+<form>
+    <div id="eingabeMaske" class="maske">
+        <h1>Produktsortiment</h1>
+        <h2>Gebe Produktdaten ein!</h2>
+        <table id="tabelleEingabe">
+            <tr>
+                <td><label>Produkt</label></td>
+                <td><input type="text" placeholder="Gib einen Produktnamen ein"/></td>
+            </tr>
+            <tr>
+                <td><label>Anbieter</label></td>
+                <td><input type="text" placeholder="Gib einen Anbieter ein"/></td>
+            </tr>
+            <tr>
+                <td><label>Wirkstoff</label></td>
+                <td><input type="text" placeholder="Gib Wirkstoff an"/></td>
+            </tr>
+            <tr>
+                <td><label>ArtikelNr</label></td>
+                <td><input type="text" placeholder="Gib die ArtikelNr ein"/></td>
+            </tr>
+            <tr>
+                <td><label>Preis</label></td>
+                <td><input type="text" placeholder="Gib den Preis ein"/></td>
+            </tr>
+            <tr>
+                <td><label>Bild</label></td>
+                <td><input type="text" placeholder="Füge Bildpfad ein"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="button" onclick="wechsleMaske('datenMaske')">Speichern</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
 <div id="datenMaske" class="maske">
     <h1>Produktsortiment</h1>
     <h2>Folgende Produkte stehen zur Auswahl</h2>
-    <button id="knopfAnlegen" onclick="wechsleMaske('eingabeMaske')"> anlegen </button>
+    <button id="knopfAnlegen" onclick="wechsleMaske('eingabeMaske')"> anlegen</button>
     <br><br>
     <table>
         <tr>
@@ -82,7 +100,7 @@
             <th>ArtikelNr</th>
             <th>Preis</th>
             <th>Bilder</th>
-            <th class="admin">Aktionen</th>
+            <th class="verwaltung">Aktionen</th>
         </tr>
         <tr>
             <td>IBU-RATIOPHARM 400mg akut Schmerztbl. Filmtabl. 50 St.</td>
@@ -91,7 +109,7 @@
             <td>63875926</td>
             <td>12,78 Euro</td>
             <td><img src="pics/ibu.jpg" style="width:50px"></td>
-            <td class="admin">
+            <td class="verwaltung">
                 <button onclick="wechsleMaske('eingabeMaske')">Ändern</button>
                 <button onclick="alert('Löschen erfolgreich');">Löschen</button>
             </td>
@@ -103,7 +121,7 @@
             <td>23843343</td>
             <td>4,19 Euro</td>
             <td><img src="pics/nasenspray.jpg" style="width:50px"></td>
-            <td class="admin">
+            <td class="verwaltung">
                 <button onclick="wechsleMaske('eingabeMaske')">Ändern</button>
                 <button onclick="alert('Löschen erfolgreich');">Löschen</button>
             </td>
@@ -115,7 +133,7 @@
             <td>97489793</td>
             <td>9,47 Euro</td>
             <td><img src="pics/hustensaft.jpg" style="width:50px"></td>
-            <td class="admin">
+            <td class="verwaltung">
                 <button onclick="wechsleMaske('eingabeMaske')">Ändern</button>
                 <button onclick="alert('Löschen erfolgreich');">Löschen</button>
             </td>
@@ -123,9 +141,9 @@
     </table>
 </div>
 <script type="text/javascript">
-    function wechsleMaske(sichtbareMaske){
+    function wechsleMaske(sichtbareMaske) {
         var masken = document.getElementsByClassName("maske");
-        for(var i = 0; i < masken.length; i++){
+        for (var i = 0; i < masken.length; i++) {
             masken[i].style.display = "none";
         }
         document.getElementById(sichtbareMaske).style.display = "block";
@@ -136,9 +154,9 @@
         document.getElementById("knopfLoggen").style.display = "none";
         document.getElementById("knopfEntloggen").style.display = "inline";
         document.getElementById("knopfAnlegen").style.display = "inline";
-        var admins = document.getElementsByClassName("admin");
-        for(var i = 0; i < admins.length; i++) {
-            admins[i].style.display = "table-cell";
+        var verwalten = document.getElementsByClassName("verwaltung");
+        for (var i = 0; i < verwalten.length; i++) {
+            verwalten[i].style.display = "table-cell"; //table-cell muss hier noch iwie weg
         }
     }
 
@@ -147,11 +165,12 @@
         document.getElementById("knopfLoggen").style.display = "inline";
         document.getElementById("knopfEntloggen").style.display = "none";
         document.getElementById("knopfAnlegen").style.display = "none";
-        var admins = document.getElementsByClassName("admin");
-        for(var i = 0; i < admins.length; i++) {
-            admins[i].style.display = "none";
+        var verwalten = document.getElementsByClassName("verwaltung");
+        for (var i = 0; i < verwalten.length; i++) {
+            verwalten[i].style.display = "none";
         }
     }
+
     wechsleMaske("datenMaske");
 </script>
 </body>
