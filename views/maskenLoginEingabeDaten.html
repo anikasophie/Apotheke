@@ -27,7 +27,7 @@
         <input id="user" type="checkbox" name="rollenWahl" value="user"/>
 
         <label for="verwaltung">Verwaltung</label>
-        <input id="verwaltung"  type="checkbox" name="rollenWahl" value="verwaltung"/>
+        <input id="verwaltung" type="checkbox" name="rollenWahl" value="verwaltung"/>
 
         <label for="speziell">Speziell</label>
         <input id="speziell" type="checkbox" name="rollenWahl" value="speziell"/>
@@ -141,6 +141,87 @@
     </table>
 </div>
 <script type="text/javascript">
+
+    function produkt(produkt, anbieter, wirkstoff, marke, preis, bild) {
+        console.log("Produkt: " + produkt + ", " + anbieter + ", " + wirkstoff + ", " + marke + ", " + preis + ", " + bild + ", ")
+        this.produkt = produkt;
+        this.anbieter = anbieter;
+        this.marke = marke;
+        this.preis = preis;
+        this.bild = bild;
+    }
+
+    var datenArray = new Array();
+    datenArray[0] = new produkt();
+
+    function lesenAusArray() {
+        console.log("lesenAusArray");
+        //Initialisiere Daten-Maske
+        $("#datenMaskeZeilen").empty();
+        // Schleife über das Array
+        var buch = "";
+        for (var i = 0; i < datenArray.length; i++) {
+            // Bilde einen HTML-String
+            buch = `<tr>
+                        ${erzeugeProduktEintrag(i)}
+                        <td>
+                            <button onclick="loeschenImArray(${i})">
+                                Löschen
+                            </button>
+                        </td>
+                     </tr>`
+            $("#datenMaskeZeilen").append(produkt());
+        }
+
+    }
+
+    function erzeugeBuchEintrag(index) {
+        console.log("erzeugeProduktEintrag");
+        var produktEintrag = "";
+        //String-Erzeugung mit Back-Ticks ist sehr praktisch
+        produktEintrag = `
+                            <td>${datenArray[index].produkt}</td>
+                            <td>${datenArray[index].anbieter}</td>
+                            <td>${datenArray[index].wirkstoff}</td>
+                            <td>${datenArray[index].marke}</td>
+                            <td>${datenArray[index].preis}</td>
+                                `
+        return produktEintrag;
+    }
+
+    function loeschenImArray(index) {
+        console.log("loeschenImArray mit " + index);
+        var entscheidung = confirm("Wollen Sie wirklich " + datenArray[index].produkt + " löschen?");
+        if (entscheidung) {
+            datenArray.splice(index, 1);
+            lesenAusArray();
+        }
+        wechselnMaske('datenMaske');
+    }
+
+    function wechselnMaske(sichtbareMaske, fall) {
+        console.log("wechselnMaske mit " + sichtbareMaske
+            + ", " + fall);
+        $(".maske").hide();
+        $("#" + sichtbareMaske).show();
+        if (typeof fall !== "undefined") {
+            if (fall == "anlegen") {
+                console.log("\t anlegen");
+                $("#eingabeMaske form").attr("action", "javascript:anlegenImArray()");
+            } else {
+                console.log("\t ändern");
+                //Fülle die Eingabefelder
+                $("#produkt").val(datenArray[fall].produkt);
+                $("#anbieter").val(datenArray[fall].anbieter);
+                $("#wirkstoff").val(datenArray[fall].wirkstoff);
+                $("#marke").val(datenArray[fall].marke);
+                $("#preis").val(datenArray[fall].preis);
+                $("#eingabeMaske form").attr("action", "javascript:aendernImArray(" + fall + ")");
+            }
+        }
+    }
+
+
     function wechsleMaske(sichtbareMaske) {
         var masken = document.getElementsByClassName("maske");
         for (var i = 0; i < masken.length; i++) {
