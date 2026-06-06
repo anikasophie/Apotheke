@@ -1,0 +1,205 @@
+/* ************* FONTS *************** */
+/* akaya-telivigala-regular - latin */
+@font-face {
+    font-family: 'Akaya Telivigala';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/akaya-telivigala-v9-latin/akaya-telivigala-v9-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local(''),
+    url('../fonts/akaya-telivigala-v9-latin/akaya-telivigala-v9-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/akaya-telivigala-v9-latin/akaya-telivigala-v9-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../fonts/akaya-telivigala-v9-latin/akaya-telivigala-v9-latin-regular.woff') format('woff'), /* Modern Browsers */
+    url('../fonts/akaya-telivigala-v9-latin/akaya-telivigala-v9-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/akaya-telivigala-v9-latin/akaya-telivigala-v9-latin-regular.svg#AkayaTelivigala') format('svg'); /* Legacy iOS */
+}
+h1,h2,h3,.navigation { font-family: Akaya Telivigala;}
+
+
+/* *************    NAVIGATION   ************ */
+/* Für alle a-Tags, die in einem Tag der Klasse navigation liegen: */
+.navigation a {
+    color: blue;
+    font-size:larger;
+    font-weight:bold;
+    text-decoration: none;
+}
+.navigation ul {
+    list-style-type: none;
+    margin-left: 580px;
+
+}
+.navigation ul li {
+    display: inline-block;
+}
+.navigation ul li a {
+    display: block;
+    padding: 10px 15px;
+}
+.navigation ul li a.active, img.active {
+    background: lightblue;
+}
+/* ********** PSEUDOKLASSEN  ************* */
+.navigation ul li a:hover {
+    background: gray;
+}
+
+header{
+    background-color:aliceblue;
+    height: 80px;
+    width:100%;
+    position:fixed;
+    top:0px;
+    left:0px;
+    margin: 0px;
+}
+#leererBlock{
+    visibility:visible;
+    height:50px;
+    width:100%;
+    background-color:blue;
+}
+.zentriertePosition {
+    display: inline-block;
+    margin: auto;
+    text-align: center;
+    width:100%;
+}
+
+#logo{
+    width:100px;
+    position:absolute;
+    top:2px;
+    left:2px;
+}
+#buchladen{
+    width:600px;
+}
+
+.crud, #logKnopf{
+    font-size:140%;
+    background-color:blue;
+    color:white;
+}
+#buchladen{
+    width:400px;
+}
+#buecher li{
+    border:1px solid blue;
+    margin:10px;
+    float:left; /* Damit die Einträge nebeneinander stehen */
+}
+
+input:focus, textarea:focus{
+    font-size:120%;
+    color:crimson;
+}
+textarea{
+    height:200px;
+}
+div.save{
+    float:left;
+    margin:10% 10% 1% 1%;
+    text-align:bottom;
+}
+.save input.abbruch{
+    border-radius:10px;
+    height:30px;
+    border:2px solid red;
+    font-size:large;
+}
+.save input[type="submit"]{
+    border-radius:10px;
+    height:30px;
+    border:2px solid blue;
+    font-weight:bold;
+    font-size:larger;
+}
+
+#logKnopf{
+    position:absolute;
+    top:15px;
+    right:15px;
+}
+#bilder{
+    width:100%;
+}
+
+/* Äußerstes Grid für das Gesamt-Layout*/
+#daten {
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+    grid-template-rows: auto;
+    grid-template-areas:
+   "links mitte rechts"
+}
+
+.item-mitte{
+    grid-area:mitte;
+    text-align:center;
+}
+.item-links{
+    grid-area:links;
+    background-color: aliceblue;
+    padding:15%;
+}
+.item-rechts{
+    grid-area:rechts;
+    background-color: aliceblue;
+    padding:15%;
+}
+
+.obj{
+    margin:8px;
+    border: 0.5px solid grey;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto;
+    grid-template-areas:
+   "pic picrow";
+}
+
+.item-pic{
+    grid-area:pic;
+    padding:4px;
+    margin:auto; /* mittig ausrichten */
+}
+.item-picrow{
+    grid-area:picrow;
+}
+
+/* Inneres Grid für jede Zeile in der Datenmaske aller Bilder */
+.objZeile{
+    grid-area:picrow;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-template-rows: auto;
+    grid-template-areas:
+   "label path buttons";
+    text-align:center;
+    font-family: Arial, sans-serif;
+    margin: 6px 0px 6px 0px;
+}
+.objZeile:nth-of-type(odd){
+    background-color:aliceblue;
+}
+.item-label{
+    grid-area:label;
+    text-align: right;
+    padding-right:4px;
+    color:blue;
+    font-size:bold;
+}
+.item-value{
+    grid-area:path;
+    text-align: left;
+    padding-left:4px;
+}
+.item-buttons{
+    grid-area:buttons;
+    padding:4px;
+}
+.ui-tooltip {
+    background-color: aqua;
+}
+
+

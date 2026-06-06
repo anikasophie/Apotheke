@@ -8,6 +8,8 @@
 <head>
     <meta charset="utf-8">
     <title>Apotheke - Produktsortimente</title>
+    <script type="text/javascript"
+            src="client-js/jquery-3.7.1.min.js"></script> <!--Muss man noch einbinden-->
     <style>
         .verwaltung, #knopfAnlegen, #knopfEntloggen {
             display: none;
@@ -55,7 +57,7 @@
         <table id="tabelleEingabe">
             <tr>
                 <td><label>Produkt</label></td>
-                <td><input type="text" placeholder="Gib einen Produktnamen ein"/></td>
+                <td><input id="produkt" type="text" placeholder="Gib einen Produktnamen ein"/></td>
             </tr>
             <tr>
                 <td><label>Anbieter</label></td>
@@ -63,19 +65,19 @@
             </tr>
             <tr>
                 <td><label>Wirkstoff</label></td>
-                <td><input type="text" placeholder="Gib Wirkstoff an"/></td>
+                <td><input id="Wirkstoff" type="text" placeholder="Gib Wirkstoff an"/></td>
             </tr>
             <tr>
                 <td><label>ArtikelNr</label></td>
-                <td><input type="text" placeholder="Gib die ArtikelNr ein"/></td>
+                <td><input id="ArtikelNr" type="text" placeholder="Gib die ArtikelNr ein"/></td>
             </tr>
             <tr>
                 <td><label>Preis</label></td>
-                <td><input type="text" placeholder="Gib den Preis ein"/></td>
+                <td><input id="Preis" type="text" placeholder="Gib den Preis ein"/></td>
             </tr>
             <tr>
                 <td><label>Bild</label></td>
-                <td><input type="text" placeholder="Füge Bildpfad ein"/></td>
+                <td><input id="Bild" type="text" placeholder="Füge Bildpfad ein"/></td>
             </tr>
             <tr>
                 <td></td>
@@ -161,7 +163,6 @@
         // Schleife über das Array
         var buch = "";
         for (var i = 0; i < datenArray.length; i++) {
-            // Bilde einen HTML-String
             buch = `<tr>
                         ${erzeugeProduktEintrag(i)}
                         <td>
@@ -170,12 +171,12 @@
                             </button>
                         </td>
                      </tr>`
-            $("#datenMaskeZeilen").append(produkt());
+            $("#datenMaskeZeilen").append(produkt);
         }
 
     }
 
-    function erzeugeBuchEintrag(index) {
+    function erzeugeProduktEintrag(index) {
         console.log("erzeugeProduktEintrag");
         var produktEintrag = "";
         //String-Erzeugung mit Back-Ticks ist sehr praktisch
@@ -197,6 +198,29 @@
             lesenAusArray();
         }
         wechselnMaske('datenMaske');
+    }
+
+    function aendernImArray(index){
+        console.log("aendernImArray mit " + index);
+        // Auslesen der Benutzerdaten und Speicherung in geeignete Variablen
+        var produkt = $("#produkt").val();
+        var anbieter = $("#anbieter").val();
+        var marke = $("#marke").val();
+        var wirkstoff = $("#wirkstoff").val();
+        var preis = $("#preis").val();
+
+        // Neues Buch mit Buch-Konstruktor erstellen
+        var geaendertesProdukt = new Produkt(produkt, anbieter, marke, wirkstoff, preis);
+
+        // Ändern des Buchs in das Array
+        datenArray[index] = geaendertesProdukt;
+
+        // Die Daten-Maske aktualisieren, d.h. neu generieren (mit lesenAusArray)
+        lesenAusArray();
+
+        // Zurück zur Bücherliste wechseln
+        wechselnMaske("datenMaske");
+
     }
 
     function wechselnMaske(sichtbareMaske, fall) {
