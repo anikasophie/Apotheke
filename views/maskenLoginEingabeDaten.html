@@ -15,6 +15,9 @@
         .verwaltung, #knopfAnlegen, #knopfEntloggen {
             display: none;
         }
+        .maske {
+            display:none;
+        }
     </style>
 </head>
 <body>
@@ -24,8 +27,8 @@
 </header>
 <div id="loginMaske" class="maske">
     <h2>Logge Dich ein!</h2>
-    <table id="einloggenAls">
-        <h3>In welcher Rolle?</h3>
+    <h3>In welcher Rolle?</h3>
+    <div>
         <label for="user">User</label>
         <input id="user" type="checkbox" name="rollenWahl" value="user"/>
 
@@ -34,6 +37,9 @@
 
         <label for="speziell">Speziell</label>
         <input id="speziell" type="checkbox" name="rollenWahl" value="speziell"/>
+    </div>
+    <br>
+    <table id="einloggenAls">
 
         <tr>
             <td><label>Name</label></td>
@@ -51,10 +57,10 @@
     </table>
 </div>
 
-<form>
     <div id="eingabeMaske" class="maske">
         <h1>Produktsortiment</h1>
         <h2>Gebe Produktdaten ein!</h2>
+        <form id="eingabeFormular">
         <table id="tabelleEingabe">
             <tr>
                 <td><label>Produkt</label></td>
@@ -62,38 +68,39 @@
             </tr>
             <tr>
                 <td><label>Anbieter</label></td>
-                <td><input type="text" placeholder="Gib einen Anbieter ein"/></td>
+                <td><input id="anbieter" type="text" placeholder="Gib einen Anbieter ein"/></td>
             </tr>
             <tr>
                 <td><label>Wirkstoff</label></td>
-                <td><input id="Wirkstoff" type="text" placeholder="Gib Wirkstoff an"/></td>
+                <td><input id="wirkstoff" type="text" placeholder="Gib Wirkstoff an"/></td>
             </tr>
             <tr>
                 <td><label>ArtikelNr</label></td>
-                <td><input id="ArtikelNr" type="text" placeholder="Gib die ArtikelNr ein"/></td>
+                <td><input id="artikelNr" type="text" placeholder="Gib die ArtikelNr ein"/></td>
             </tr>
             <tr>
                 <td><label>Preis</label></td>
-                <td><input id="Preis" type="text" placeholder="Gib den Preis ein"/></td>
+                <td><input id="preis" type="text" placeholder="Gib den Preis ein"/></td>
             </tr>
             <tr>
                 <td><label>Bild</label></td>
-                <td><input id="Bild" type="text" placeholder="Füge Bildpfad ein"/></td>
+                <td><input id="bild" type="text" placeholder="Füge Bildpfad ein"/></td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <button type="button" onclick="wechsleMaske('datenMaske')">Speichern</button>
+                    <button type="button" id="speichernKnopf" onclick="anlegenImArray()">Speichern</button>
+                    <button type="button" onclick="wechsleMaske('datenMaske')"></button>
                 </td>
             </tr>
         </table>
+        </form>
     </div>
-</form>
 
 <div id="datenMaske" class="maske">
     <h1>Produktsortiment</h1>
     <h2>Folgende Produkte stehen zur Auswahl</h2>
-    <button id="knopfAnlegen" onclick="wechsleMaske('eingabeMaske')"> anlegen</button>
+    <button id="knopfAnlegen" onclick="wechsleMaske('eingabeMaske')">Neues Produkt anlegen</button>
     <br><br>
     <table>
         <tr>
@@ -145,16 +152,20 @@
 </div>
 <script type="text/javascript">
 
-    function produkt(produkt, anbieter, wirkstoff, marke, preis, bild) {
-        console.log("Produkt: " + produkt + ", " + anbieter + ", " + wirkstoff + ", " + marke + ", " + preis + ", " + bild + ", ")
+    function Produkt(produkt, anbieter, wirkstoff, marke, preis, bild) {
+        console.log("Produkt: " + produkt + ", " + anbieter + ", " + wirkstoff + ", " + artikelNr + ", " + preis + ", " + bild + ", ")
         this.produkt = produkt;
         this.anbieter = anbieter;
-        this.marke = marke;
+        this.wirkstoff = wirkstoff;
+        this.artikelNr = artikelNr;
         this.preis = preis;
         this.bild = bild;
     }
+    var datenArray = [
+        new Produkt("IBU-RATIOPHARM 400mg akut", "ratiopharm GmbH", "Ibuprofen", "63875926", "12,78 Euro", "pics/ibu.jpg"),
+        new Produkt("NASENSPRAY Heumann 10ml", "HEUMANN PHARMA", "Xylometazolin", "23843343", "4,19 Euro", "pics/nasenspray.jpg")
+    ];
 
-    var datenArray = new Array();
     datenArray[0] = new produkt();
 
     function lesenAusArray() {
@@ -162,9 +173,8 @@
         //Initialisiere Daten-Maske
         $("#datenMaskeZeilen").empty();
         // Schleife über das Array
-        var buch = "";
         for (var i = 0; i < datenArray.length; i++) {
-            buch = `<tr>
+            Produkt = `<tr>
                         ${erzeugeProduktEintrag(i)}
                         <td>
                             <button onclick="loeschenImArray(${i})">
@@ -177,7 +187,7 @@
 
     }
 
-    function erzeugeProduktEintrag(index) {
+    function anlegenImArray(index) {
         console.log("erzeugeProduktEintrag");
         var produktEintrag = "";
         //String-Erzeugung mit Back-Ticks ist sehr praktisch
@@ -198,7 +208,7 @@
             datenArray.splice(index, 1);
             lesenAusArray();
         }
-        wechselnMaske('datenMaske');
+        wechseleMaske('datenMaske');
     }
 
     function aendernImArray(index){
@@ -210,40 +220,20 @@
         var wirkstoff = $("#wirkstoff").val();
         var preis = $("#preis").val();
 
-        // Neues Buch mit Buch-Konstruktor erstellen
-        var geaendertesProdukt = new Produkt(produkt, anbieter, marke, wirkstoff, preis);
-
-        // Ändern des Buchs in das Array
         datenArray[index] = geaendertesProdukt;
-
-        // Die Daten-Maske aktualisieren, d.h. neu generieren (mit lesenAusArray)
         lesenAusArray();
-
-        // Zurück zur Bücherliste wechseln
-        wechselnMaske("datenMaske");
+        wechseleMaske("datenMaske");
 
     }
 
-    function wechselnMaske(sichtbareMaske, fall) {
-        console.log("wechselnMaske mit " + sichtbareMaske
-            + ", " + fall);
+    function wechseleMaske(sichtbareMaske) {
+        console.log("wechselnMaske mit " + sichtbareMaske);
         $(".maske").hide();
         $("#" + sichtbareMaske).show();
-        if (typeof fall !== "undefined") {
-            if (fall == "anlegen") {
-                console.log("\t anlegen");
-                $("#eingabeMaske form").attr("action", "javascript:anlegenImArray()");
-            } else {
-                console.log("\t ändern");
-                //Fülle die Eingabefelder
-                $("#produkt").val(datenArray[fall].produkt);
-                $("#anbieter").val(datenArray[fall].anbieter);
-                $("#wirkstoff").val(datenArray[fall].wirkstoff);
-                $("#marke").val(datenArray[fall].marke);
-                $("#preis").val(datenArray[fall].preis);
-                $("#eingabeMaske form").attr("action", "javascript:aendernImArray(" + fall + ")");
-            }
+        if ('datenMake' == sichtbareMaske) {
+            return;
         }
+        lesenAusArray();
     }
 
 
